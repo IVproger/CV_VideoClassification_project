@@ -1,6 +1,3 @@
-Here’s the updated ReadMe with a **Project Setup** section:
-
-```markdown
 # Video Classification Using ANN Architectures
 
 ## Project Overview
