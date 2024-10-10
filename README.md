@@ -1,7 +1,7 @@
-# Video Classification Using ANN Architectures
+# Video Classification Using Deep Neural Network Architectures
 
 ## Project Overview
-This project focuses on video classification using a range of Artificial Neural Network (ANN) architectures combined with advanced video preprocessing techniques. Our goal is to explore the potential of deep learning in accurately classifying video sequences into predefined categories.
+This project focuses on video classification using a range of Deep Neural Network (DNN) architectures combined with advanced video preprocessing techniques. Our goal is to explore the potential of deep learning in accurately classifying video sequences into predefined categories.
 
 ## Project Idea
 Video classification is a challenging task due to the complexity of video data, involving spatial and temporal features. In this project, we apply various ANN architectures, including Convolutional Neural Networks (CNNs), Recurrent Neural Networks (RNNs), and 3D CNNs, to capture both frame-level and sequence-level information.
