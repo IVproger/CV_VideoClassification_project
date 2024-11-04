@@ -15,7 +15,12 @@ hydra-core = "^1.3.2"
 av = "11.0.0"
 ipykernel = "^6.29.5"
 dvc = "^3.55.2"
+torch = ">=2.2.2,<2.6.0"
+torchvision = ">=0.17.2,<0.18.0"
+numpy = "<2"
 
+[tool.poetry.group.dev.dependencies]
+ipykernel = "^6.29.5"
 
 [build-system]
 requires = ["poetry-core"]
