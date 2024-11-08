@@ -18,6 +18,17 @@ dvc = "^3.55.2"
 torch = ">=2.2.2,<2.6.0"
 torchvision = ">=0.17.2,<0.18.0"
 numpy = "<2"
+transformers = {extras = ["torch"], version = "^4.46.2"}
+datasets = "^3.1.0"
+pytorchvideo = "^0.1.5"
+imageio = "^2.36.0"
+evaluate = "^0.4.3"
+scikit-learn = "^1.5.2"
+clearml = "^1.16.5"
+python-dotenv = "^1.0.1"
+nbconvert = "^7.16.4"
+peft = "^0.13.2"
+torchinfo = "^1.8.0"
 
 [tool.poetry.group.dev.dependencies]
 ipykernel = "^6.29.5"
