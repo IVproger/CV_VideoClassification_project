@@ -29,6 +29,7 @@ python-dotenv = "^1.0.1"
 nbconvert = "^7.16.4"
 peft = "^0.13.2"
 torchinfo = "^1.8.0"
+gradio = "^5.6.0"
 
 [tool.poetry.group.dev.dependencies]
 ipykernel = "^6.29.5"
