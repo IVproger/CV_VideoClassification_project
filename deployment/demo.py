@@ -1,10 +1,7 @@
-import gradio as gr
 import os
-import random
-import cv2
 import torch
 import numpy as np
-
+import gradio as gr
 
 from peft import PeftModel, PeftConfig
 from transformers import (
@@ -14,88 +11,90 @@ from transformers import (
     VideoMAEImageProcessor,
 )
 
-USE_LORA_MODEL = True
-
-BASE_MODEL = "MCG-NJU/videomae-base"
-LORA_MODEL = "model"
-
-model = AutoModelForVideoClassification.from_pretrained(
-    BASE_MODEL, ignore_mismatched_sizes=True
-)
-if USE_LORA_MODEL:
-    config = PeftConfig.from_pretrained(LORA_MODEL, inference_mode=True)
-    model = PeftModel.from_pretrained(
-        model,
-        LORA_MODEL,
-        config=config,
-        is_trainable=False,
-        ignore_mismatched_sizes=True,
-    )
-image_processor = VideoMAEImageProcessor.from_pretrained(LORA_MODEL)
-
-
-device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-pipe = pipeline(
-    "video-classification", model=model, image_processor=image_processor, device=device
-)
-
 # Load predefined videos
 PREDEFINED_VIDEOS_DIR = "videos"
-predefined_videos = {
+PREDEFINED_VIDEOS = {
     video: os.path.join(PREDEFINED_VIDEOS_DIR, video)
     for video in os.listdir(PREDEFINED_VIDEOS_DIR)
     if video.endswith((".mp4", ".avi", ".mkv"))
 }
 # null value for this dropdown
 NO_PREDEFINED_VIDEO_SELECTED = "No predefined video selected"
-predefined_videos[NO_PREDEFINED_VIDEO_SELECTED] = ""
+PREDEFINED_VIDEOS[NO_PREDEFINED_VIDEO_SELECTED] = ""
 
 # model
 PREDEFINED_MODELS_DIR = "models"
-predefined_models = {
+PREDEFINED_MODELS = {
     model_dir: os.path.join(PREDEFINED_MODELS_DIR, model_dir)
     for model_dir in os.listdir(PREDEFINED_MODELS_DIR)
 }
-print(predefined_models)
+DEFAULT_MODEL = list(PREDEFINED_MODELS.keys())[1]
+
+
+USE_LORA_MODEL = False
+BASE_MODEL = "MCG-NJU/videomae-base"
+LORA_MODEL = "model"
+
+# model = AutoModelForVideoClassification.from_pretrained(
+#     BASE_MODEL, ignore_mismatched_sizes=True
+# )
+# if USE_LORA_MODEL:
+#     config = PeftConfig.from_pretrained(LORA_MODEL, inference_mode=True)
+#     model = PeftModel.from_pretrained(
+#         model,
+#         LORA_MODEL,
+#         config=config,
+#         is_trainable=False,
+#         ignore_mismatched_sizes=True,
+#     )
+# image_processor = VideoMAEImageProcessor.from_pretrained(LORA_MODEL)
+
+
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+pipe = pipeline(
+    "video-classification",
+    model=PREDEFINED_MODELS[DEFAULT_MODEL],  # paths to local model setup
+    image_processor=PREDEFINED_MODELS[DEFAULT_MODEL],
+    device=device,
+)
 
 
 def on_predefined_video_select(predefined_video: str):
-    path = predefined_videos.get(predefined_video)
+    path = PREDEFINED_VIDEOS.get(predefined_video)
     # if its "" we don't need to propagate path to video
     if path:
         return path
 
 
-# https://huggingface.co/docs/transformers/en/tasks/video_classification#inference
+def on_predefined_model_select(predefined_model: str):
+    path = PREDEFINED_MODELS.get(predefined_model)
+
+    # if its "" we don't need to propagate path to video
+    if path:
+        # reload global pipeline variable
+        global pipe
+        pipe = pipeline(
+            "video-classification",
+            model=path,
+            image_processor=path,
+            device=device,
+        )
+
+        return predefined_model
+
+
 def on_inference_button_click(video: str):
+    # https://huggingface.co/docs/transformers/en/tasks/video_classification#inference
     if video:
         res = pipe(video)
 
-        print(pipe.model.config.id2label)
-
-        label = pipe.model.config.id2label[res[0]["label"]]
-        score = res[0]["score"]
-
-        return f"{label} {score * 100:.2f}%"
-
-    # inputs = {
-    #     "pixel_values": video_tensor.unsqueeze(0),
-    #     # "labels": torch.tensor(
-    #     #     [sample_test_video["label"]]
-    #     # ),  # this can be skipped if you don't have labels available.
-    # }
-
-    # inputs = {k: v.to(device) for k, v in inputs.items()}
-    # model = model.to(device)
-
-    # # forward pass
-    # with torch.no_grad():
-    #     outputs = model(**inputs)
-    #     print(outputs)
-
-    #     logits = outputs.logits
-
-    return video
+        if res is not None and len(res) > 0:
+            # get most probable label and score
+            label = res[0]["label"]
+            score = res[0]["score"]
+            return f"{label} {score * 100:.2f}%"
+        else:
+            return "No result"
 
 
 def on_video_upload(video: str):
@@ -112,15 +111,15 @@ with gr.Blocks() as demo:
 
         with gr.Column():
             predefined_video = gr.Dropdown(
-                choices=list(predefined_videos.keys()),
+                choices=list(PREDEFINED_VIDEOS.keys()),
                 label="Select Predefined Video",
                 value=NO_PREDEFINED_VIDEO_SELECTED,
                 elem_id="predefined_video",
             )
-            chosen_model = gr.Dropdown(
-                choices=["MCG-NJU/videomae-base", "MCG-NJU/videomae-large"],
-                label="Select Model",
-                value="MCG-NJU/videomae-base",
+            predefined_model = gr.Dropdown(
+                choices=list(PREDEFINED_MODELS.keys()),
+                label="Select Predefined Model",
+                value=DEFAULT_MODEL,
             )
             output_label = gr.Textbox(label="Predicted label: ", interactive=False)
             inference_button = gr.Button("Classify")
@@ -141,6 +140,12 @@ with gr.Blocks() as demo:
         outputs=[video],
     )
 
+    predefined_model.select(
+        fn=on_predefined_model_select,
+        inputs=[predefined_model],
+        outputs=[predefined_model],
+    )
+
     inference_button.click(
         fn=on_inference_button_click,
         inputs=[video],
@@ -155,4 +160,4 @@ with gr.Blocks() as demo:
     )
 
 
-demo.launch(debug=True)
+demo.launch(share=False, debug=True)
