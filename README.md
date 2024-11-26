@@ -37,8 +37,6 @@ Project Root
 │   └── tmp/                # Temporary files for DVC
 ├── .dvcignore             # Patterns for files DVC should ignore
 ├── .gitignore             # Git ignore file
-├── configs/
-│   └── README.md          # Documentation for configuration files
 ├── data/
 │   ├── processed/         # Processed data files
 │   ├── raw/               # Raw data files
@@ -51,14 +49,12 @@ Project Root
 │
 ├── notebooks/             # Jupyter notebooks for experimentation and analysis
 ├── papers/                # Research papers and related documents
-├── pipelines/             # Data processing and model training pipelines
 ├── poetry.lock            # Poetry lock file for dependencies
 ├── pyproject.toml         # Project configuration file for Poetry
 ├── README.md              # Main project documentation
 ├── reports/               # Generated reports and analysis results
 ├── requirements.txt       # Python dependencies
 ├── scripts/               # Utility scripts for various tasks
-├── services/              # Microservices and related code
 └── src/                   # Source code for the project
 ```
 
