@@ -1,5 +1,9 @@
 # Enhancing Action Recognition with Advanced Frame Extraction Techniques
 
+> [Presentation Slides](./reports/presentation.pdf)
+
+> [Final Report](./reports/report.pdf)
+
 ## Project Overview
 Video action recognition is a fundamental problem in computer vision with diverse applications such as surveillance, healthcare, sports analytics and etc. This project aims to tackle the challenges of high computational demands and reliance on extensive annotated datasets by proposing a resource-efficient framework for video classification. Our streamlined approach optimizes data processing while preserving the critical features needed for accurate action recognition, making it suitable for real-world, resource-constrained scenarios
 
