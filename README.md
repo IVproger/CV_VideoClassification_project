@@ -1,36 +1,32 @@
-# Video Classification Using Deep Neural Network Architectures
+# Enhancing Action Recognition with Advanced Frame Extraction Techniques
 
 ## Project Overview
-This project focuses on video classification using a range of Deep Neural Network (DNN) architectures combined with advanced video preprocessing techniques. Our goal is to explore the potential of deep learning in accurately classifying video sequences into predefined categories.
+Video action recognition is a fundamental problem in computer vision with diverse applications such as surveillance, healthcare, sports analytics and etc. This project aims to tackle the challenges of high computational demands and reliance on extensive annotated datasets by proposing a resource-efficient framework for video classification. Our streamlined approach optimizes data processing while preserving the critical features needed for accurate action recognition, making it suitable for real-world, resource-constrained scenarios
 
-## Project Idea
-Video classification is a challenging task due to the complexity of video data, involving spatial and temporal features. In this project, we apply various ANN architectures, including Convolutional Neural Networks (CNNs), Recurrent Neural Networks (RNNs), and 3D CNNs, to capture both frame-level and sequence-level information.
+## Approach and Methodology  
 
-## Algorithms and Architectures
-We plan to experiment with the following architectures:
-- **3D Convolutional Neural Networks (3D CNNs)**: To capture spatial and temporal dynamics.
-- **Long Short-Term Memory (LSTM)**: For handling temporal dependencies in video frames.
-- **Convolutional LSTM (ConvLSTM)**: Combining convolutional operations with LSTMs to improve spatial-temporal feature extraction.
-- **Temporal Segment Networks (TSN)**: To model long-term temporal structures across videos.
+### Frame Extraction  
+To reduce video complexity and size, we employ a hybrid frame selection technique:
+- ORB (Oriented FAST and Rotated BRIEF): Efficiently captures key points and motion dynamics.  
+- SIFT (Scale-Invariant Feature Transform): Preserves spatial features across frames.  
 
-## Advanced Video Preprocessing Techniques
-To enhance the performance of our models, we will use the following preprocessing techniques:
-- **Optical Flow Extraction**: For capturing motion dynamics between frames.
-- **Frame Sampling**: To reduce redundancy in video sequences.
-- **Data Augmentation**: Such as rotation, flipping, and brightness adjustments for better generalization.
+### Deep Learning Models  
+We leverage the following advanced architectures:
+- VideoMAE: A transformer-based model pre-trained for self-supervised learning, allowing efficient action recognition.  
+- (2+1)D Convolutions: Combines 2D spatial and 1D temporal convolutions for robust video representation.
 
-## Datasets
-We will be using the following datasets to evaluate our models:
-- **UCF-101**: An action recognition dataset with 101 action classes and over 13,000 videos.
-- **Kinetics-400**: A large-scale video dataset containing 400 action classes.
+---
 
-## Tools and Libraries
-The tools and frameworks we plan to use include:
-- **TensorFlow/Keras**: For building and training the neural network models.
-- **OpenCV**: For video preprocessing tasks.
-- **FFmpeg**: For handling video conversions and preprocessing.
-- **PyTorch**: As an alternative for model development and experimentation.
+## Dataset
+We used [UCF50](https://www.kaggle.com/datasets/pypiahmad/realistic-action-recognition-ucf50) dataset that represents video action recognition benchmark consisting of 6,618 video clips that cover 50 different human action categories. It was introduced by the University of Central Florida in 2012 to facilitate research in the area of video understanding and human action recognition.
 
+---
+
+## Performance Highlights  
+- Achieved 50% dataset compression while preserving action recognition accuracy.  
+- Reduced training time and computational cost with the hybrid approach.  
+
+---
 ## Project Setup
 
 To set up and run the project locally, follow these steps:
@@ -53,14 +49,25 @@ To set up and run the project locally, follow these steps:
    ```bash
    pip install -Ur requirements.txt
    ```
+## Project artifacts
+Main project's artifacts are located on [google drive](https://drive.google.com/drive/folders/12dvlSi4D_iX9hXTzAeZ0dM9zy2S2KKI6). 
 
+## References 
+1. E. Rublee, V. Rabaud, K. Konolige, and G. Bradski, “ORB: An efficient alternative to SIFT or SURF,” *Proceedings of the IEEE International Conference on Computer Vision*, pp. 2564–2571, Nov. 2011. doi: [10.1109/ICCV.2011.6126544](https://doi.org/10.1109/ICCV.2011.6126544).  
 
-## References and Articles
-- [3D CNN for Video Classification](https://arxiv.org/abs/1412.0767)
-- [Temporal Segment Networks](https://arxiv.org/abs/1608.00859)
-- [Convolutional LSTM](https://arxiv.org/abs/1506.04214)
-- [UCF-101 Dataset](https://www.crcv.ucf.edu/data/UCF101.php)
-- [Kinetics-400 Dataset](https://deepmind.com/research/open-source/kinetics)
+2. E. Karami, S. Prasad, and M. Shehata, “Image Matching Using SIFT, SURF, BRIEF and ORB: Performance Comparison for Distorted Images,” *arXiv preprint*, 2017. Available: [https://arxiv.org/abs/1710.02726](https://arxiv.org/abs/1710.02726).  
+
+3. A. Hussain, T. Hussain, W. Ullah, and S. W. Baik, “Vision Transformer and Deep Sequence Learning for Human Activity Recognition in Surveillance Videos,” *Computational Intelligence and Neuroscience*, vol. 2022, no. 1, p. 3454167, 2022. doi: [10.1155/2022/3454167](https://doi.org/10.1155/2022/3454167).  
+
+4. S. N. Gowda, M. Rohrbach, and L. Sevilla-Lara, “SMART Frame Selection for Action Recognition,” *arXiv preprint*, 2020. Available: [https://arxiv.org/abs/2012.10671](https://arxiv.org/abs/2012.10671).  
+
+5. A. Makandar, D. Mulimani, and M. Jevoor, “Preprocessing Step-Review of Key Frame Extraction Techniques for Object Detection in Video,” 2015. Available: [https://api.semanticscholar.org/CorpusID:40113593](https://api.semanticscholar.org/CorpusID:40113593).  
+
+6. M. Mao, A. Lee, and M. Hong, “Deep Learning Innovations in Video Classification: A Survey on Techniques and Dataset Evaluations,” *Electronics*, vol. 13, p. 2732, Jul. 2024. doi: [10.3390/electronics13142732](https://doi.org/10.3390/electronics13142732).  
+
+7. D. Tran, H. Wang, L. Torresani, J. Ray, Y. LeCun, and M. Paluri, “A Closer Look at Spatiotemporal Convolutions for Action Recognition,” *arXiv preprint*, 2018. Available: [https://arxiv.org/abs/1711.11248](https://arxiv.org/abs/1711.11248).  
+
+8. Z. Tong, Y. Song, J. Wang, and L. Wang, “VideoMAE: Masked Autoencoders are Data-Efficient Learners for Self-Supervised Video Pre-Training,” *arXiv preprint*, 2022. Available: [https://arxiv.org/abs/2203.12602](https://arxiv.org/abs/2203.12602).  
 
 ## Team Members
 - **Rufina Gafiiatullina** (r.gafiiatullina@innopolis.university)
