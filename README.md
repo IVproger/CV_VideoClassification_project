@@ -11,24 +11,45 @@ Video action recognition is a fundamental problem in computer vision with divers
 
 ### Frame Extraction  
 To reduce video complexity and size, we employ a hybrid frame selection technique:
-- ORB (Oriented FAST and Rotated BRIEF): Efficiently captures key points and motion dynamics.  
+- ORB (Oriented FAST and Rotated BRIEF): Efficiently captures key points and motion dynamics. 
+
+![orb](./reports/assets/orb.png)
+
 - SIFT (Scale-Invariant Feature Transform): Preserves spatial features across frames.  
+
+![sift1](./reports/assets/sift1.png)
+![sift2](./reports/assets/sift2.png)
 
 ### Deep Learning Models  
 We leverage the following advanced architectures:
-- VideoMAE: A transformer-based model pre-trained for self-supervised learning, allowing efficient action recognition.  
+- VideoMAE: A transformer-based model pre-trained for self-supervised learning, allowing efficient action recognition.
+
+![videomae](./reports/assets/videomae.png)
+
 - (2+1)D Convolutions: Combines 2D spatial and 1D temporal convolutions for robust video representation.
+
+![conv2plus1D](./reports/assets/conv2plus1D.png)
 
 ---
 
 ## Dataset
 We used [UCF50](https://www.kaggle.com/datasets/pypiahmad/realistic-action-recognition-ucf50) dataset that represents video action recognition benchmark consisting of 6,618 video clips that cover 50 different human action categories. It was introduced by the University of Central Florida in 2012 to facilitate research in the area of video understanding and human action recognition.
 
+![ucf50](./reports/assets/ucf50.png)
+
 ---
 
 ## Performance Highlights  
 - Achieved 50% dataset compression while preserving action recognition accuracy.  
+
+![compression](./reports/assets/compression.png)
+
 - Reduced training time and computational cost with the hybrid approach.  
+
+![VideoMAE Evaluation Accuracy by iterations](./reports/plots/videomae-comparisons/eval-accuracy-iter.png)
+
+![VideoMAE Evaluation Accuracy by time](./reports/plots/videomae-comparisons/eval-accuracy-time.png)
+
 
 ---
 ## Project Structure
